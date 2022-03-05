@@ -7,16 +7,24 @@ I began working on this project with the idea that I would scrape disorganized d
 -The consent decree, settling the legal dispute
 -The formal complaint against the polluter by the U.S. government
 -The page URL where the information was taken from
+
 ##How I did it
+
 My code consists of three main functions:
 1. To scrape the URLs and put them into a list
 2. To scrape the information from each page
 3. To run the above function for each page and print to a CSV file
+
 ###get_urls_from_single_page
+
 This first function takes a base URL, where other URLs are listed. A for loop parses the page, finds the `a` tags in the `article` and appends each violation link to a list: `epa_url_list`. The list is returned and `get_urls_from_single_page` is called.
+
 ###scrape_violation
+
 This is the meat of the project, and by far the most challenging to build. The name is scraped using a day 1 beautiful soup command: `soup.h1`. The PDF links were also grabbed very simply, using two for-loops for the consent decree and complaint. These for-loops look for the links using `'a', href=True` where the text contains the titles of these documents. But the real headache was the massive if-elif-else statement that looked for the civil penalties.
+
 ###write_csv
+
 This last function is very simple. It writes the scraped information to a CSV, adds headings and closes the file. I added a sleep timer here, in case I ran into nay problems with a site not loading fast enough to be able to scrape it.
 ##Where I struggled
 This HTML was a nightmare to work with. Because it seems this page was updated infrequently and only when the EPA had a big case to brag about, there were very little similarities in the pages' design. Finding the civil penalties was very difficult because of this. I intended to scrape the short paragraph that explained how much the polluter was fined and where that money went. In a perfect world, this text would be inside a `heading` tag. But the EPA's coders had many ways of storing this information:
